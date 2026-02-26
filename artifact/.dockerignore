@@ -1,0 +1,19 @@
+# Ignore cache and version control
+__pycache__
+*.pyc
+.git
+.gitignore
+.env
+*.env
+
+# Ignore generated outputs (keep image small; use -v mount to provide or persist these)
+results_summary.txt
+artifact_results*.png
+buggy_dead_code_results.csv
+spm_*/
+first*/
+matched_*
+screenshot_*.png
+
+# Optional: uncomment to exclude datasets from the image (you must mount them or use a volume)
+# python_buggy_dataset_*/

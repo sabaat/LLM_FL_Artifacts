@@ -1,0 +1,6 @@
+{
+  "instruction": "Generate a rotating cube in Python using OpenGL.",
+  "buggy_code": "import pygame\nfrom pygame.locals import *\nfrom OpenGL.GL import *\nfrom OpenGL.GLU import *\nvertices = ((1, -1, -1), (1, 1, -1), (-1, 1, -1), (-1, -1, -1), (1, -1, 1), (1, 1, 1), (-1, -1, 1), (-1, 1, 1))\nedges = ((0, 1), (0, 3), (0, 4), (2, 1), (2, 3), (2, 7), (6, 3), (6, 4), (6, 7), (5, 1), (5, 4), (5, 7))\n\ndef Cube():\n    glBegin(GL_LINES)\n    for edge in edges:\n        for vertex in edge:\n            glVertex3fv(vertices[vertex])\n    glEnd()\n\ndef main():\n    pygame.init()\n    display = (800, 600)\n    pygame.display.set_mode(display, DOUBLEBUF | OPENGL)\n    gluPerspective(45, display[0] / display[0], 0.1, 90.0)\n    glTranslatef(0.0, 0.0, -20)\n    glRotatef(45.0, 0.0, 1.0, 0.0)\n    glRotatef(45.0, 1.0, 0.0, 0.0)\n    Cube()\n    pygame.display.flip()\n    pygame.time.wait(1000)\nif __name__ == '__main__':\n    main()",
+  "line_no": 44,
+  "line_no_percent": "163%"
+}

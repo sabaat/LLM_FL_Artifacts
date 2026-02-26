@@ -1,0 +1,108 @@
+For each SAM: out of N programs where the LLM successfully localized the fault,
+how many were still localized after each SPM?
+
+================================================================================
+
+Mutation strength 1
+----------------------------------------
+SAM: BooleanLogic (N = 5)
+  SPM (commented             ):  1 / 5
+  SPM (variable              ):  0 / 5
+  SPM (dead_code             ):  3 / 5
+  SPM (variable_cumulative   ):  0 / 5
+  SPM (dead_code_cumulative  ):  1 / 5
+
+SAM: MisplacedReturn (N = 5)
+  SPM (commented             ):  2 / 5
+  SPM (variable              ):  2 / 5
+  SPM (dead_code             ):  2 / 5
+  SPM (variable_cumulative   ):  3 / 5
+  SPM (dead_code_cumulative  ):  2 / 5
+
+SAM: OffByOne (N = 5)
+  SPM (commented             ):  1 / 5
+  SPM (variable              ):  0 / 5
+  SPM (dead_code             ):  1 / 5
+  SPM (variable_cumulative   ):  2 / 5
+  SPM (dead_code_cumulative  ):  0 / 5
+
+SAM: OperatorSwap (N = 5)
+  SPM (commented             ):  1 / 5
+  SPM (variable              ):  1 / 5
+  SPM (dead_code             ):  0 / 5
+  SPM (variable_cumulative   ):  1 / 5
+  SPM (dead_code_cumulative  ):  2 / 5
+
+================================================================================
+
+Mutation strength 4 (comparison)
+----------------------------------------
+SAM: BooleanLogic (N = 5)
+  SPM (commented             ):  0 / 5
+  SPM (variable              ):  1 / 5
+  SPM (dead_code             ):  1 / 5
+  SPM (variable_cumulative   ):  0 / 5
+  SPM (dead_code_cumulative  ):  1 / 5
+
+SAM: MisplacedReturn (N = 5)
+  SPM (commented             ):  1 / 5
+  SPM (variable              ):  2 / 5
+  SPM (dead_code             ):  0 / 5
+  SPM (variable_cumulative   ):  0 / 5
+  SPM (dead_code_cumulative  ):  1 / 5
+
+SAM: OffByOne (N = 5)
+  SPM (commented             ):  0 / 5
+  SPM (variable              ):  1 / 5
+  SPM (dead_code             ):  1 / 5
+  SPM (variable_cumulative   ):  1 / 5
+  SPM (dead_code_cumulative  ):  0 / 5
+
+SAM: OperatorSwap (N = 5)
+  SPM (commented             ):  1 / 5
+  SPM (variable              ):  0 / 5
+  SPM (dead_code             ):  1 / 5
+  SPM (variable_cumulative   ):  0 / 5
+  SPM (dead_code_cumulative  ):  1 / 5
+
+================================================================================
+
+Comparison: strength 1 vs 4 (still localized)
+----------------------------------------
+SAM: BooleanLogic (N = 5)
+  SPM (commented             ): strength1= 1  strength4= 0
+  SPM (variable              ): strength1= 0  strength4= 1
+  SPM (dead_code             ): strength1= 3  strength4= 1
+  SPM (variable_cumulative   ): strength1= 0  strength4= 0
+  SPM (dead_code_cumulative  ): strength1= 1  strength4= 1
+
+SAM: MisplacedReturn (N = 5)
+  SPM (commented             ): strength1= 2  strength4= 1
+  SPM (variable              ): strength1= 2  strength4= 2
+  SPM (dead_code             ): strength1= 2  strength4= 0
+  SPM (variable_cumulative   ): strength1= 3  strength4= 0
+  SPM (dead_code_cumulative  ): strength1= 2  strength4= 1
+
+SAM: OffByOne (N = 5)
+  SPM (commented             ): strength1= 1  strength4= 0
+  SPM (variable              ): strength1= 0  strength4= 1
+  SPM (dead_code             ): strength1= 1  strength4= 1
+  SPM (variable_cumulative   ): strength1= 2  strength4= 1
+  SPM (dead_code_cumulative  ): strength1= 0  strength4= 0
+
+SAM: OperatorSwap (N = 5)
+  SPM (commented             ): strength1= 1  strength4= 1
+  SPM (variable              ): strength1= 1  strength4= 0
+  SPM (dead_code             ): strength1= 0  strength4= 1
+  SPM (variable_cumulative   ): strength1= 1  strength4= 0
+  SPM (dead_code_cumulative  ): strength1= 2  strength4= 1
+
+================================================================================
+
+Windowed results (cumulative over all test_llm runs)
+----------------------------------------
+  Window 0-25%: Matches = 24, Mismatches = 57
+  Window 25-50%: Matches = 8, Mismatches = 67
+  Window 50-75%: Matches = 4, Mismatches = 30
+  Window 75-100%: Matches = 2, Mismatches = 8
+

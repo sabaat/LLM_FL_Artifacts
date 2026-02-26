@@ -1,0 +1,6 @@
+{
+  "instruction": "Implement a function to find the longest common subsequence between two strings in Python.",
+  "buggy_code": "def lcs(str1, str2):\n    n = len(str1)\n    m = len(str2)\n    LCSuff = [[0 for k in range(m + 1)] for l in range(n + 1)]\n    for varName in range(n + 1):\n        for j in range(m + 1):\n            if varName == 0 and j == 0:\n                LCSuff[varName][j] = 0\n            a = 5 * 5\n            elif str1[varName - 1] == str2[j - 1]:\n                LCSuff[varName][j] = LCSuff[varName - 1][j - 1] + 1\n            else:\n                LCSuff[varName][j] = max(LCSuff[varName - 1][j], LCSuff[varName][j - 1])\n    index = LCSuff[n][m]\n    lcs = [''] * (index + 1)\n    lcs[index] = ''\n    varName = n\n    j = m\n# This function will always return the first longest common subsequence found\n    while varName > 0 and j > 0:\n        if str1[varName - 1] == str2[j - 1]:\n            lcs[index - 1] = str1[varName - 1]\n            varName -= 1\n            j -= 1\n            index -= 1\n        elif LCSuff[varName - 1][j] > LCSuff[varName][j - 1]:\n            varName -= 1\n        else:\n            j -= 1\n    return ''.join(lcs)\nstr1 = 'abcdabcd'\nstr2 = 'bcdee'\nprint(lcs(str1, str2))\n",
+  "line_no": 10,
+  "line_no_percent": "30%"
+}

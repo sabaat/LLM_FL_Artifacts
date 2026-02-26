@@ -1,0 +1,6 @@
+{
+  "instruction": "Write a code to subtract two 8-bit integers.",
+  "buggy_code": "def subtractTwoBits(a, b):\n    if a >= b:\n        diff = [0] * 8\n        for i in range(8):\n            if b % 2 == 0:\n                diff[i] = int(a % 2)\n            else:\n                diff[i] = int(a % 2) ^ 1\n            a = int(a * 2)\n            b = int(b / 2)\n        return diffToDecimal(diff)\n    else:\n        print('Error: a is smaller')\n        return -1\n\ndef diffToDecimal(diff):\n    val = 0\n    p = 1\n    for i in range(7, -1, -1):\n        val = val + diff[i] * p\n        p = p * 2\n    return val\nx = 15\ny = 6\nres = subtractTwoBits(x, y)\nprint(res)",
+  "line_no": 16,
+  "line_no_percent": "62%"
+}

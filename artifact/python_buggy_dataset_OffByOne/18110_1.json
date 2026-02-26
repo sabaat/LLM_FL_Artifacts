@@ -1,0 +1,6 @@
+{
+  "instruction": "Create a Natural Language Processing pipeline for sentiment analysis in Python using NLTK and Scikit-Learn.",
+  "buggy_code": "import nltk\nimport pandas as pd\nimport sklearn\nfrom nltk.tokenize import word_tokenize\nfrom nltk.corpus import stopwords\nfrom nltk.stem.porter import PorterStemmer\ndf = pd.read_csv('data.csv')\nstop_words = list(set(stopwords.words('english')))\nporter = PorterStemmer()\nprocessed_words = []\nfor i in range(1, len(df)):\n    words = word_tokenize(df['text'][i])\n    words = [w for w in words if not w in stop_words]\n    words = [porter.stem(w) for w in words]\n    processed_words.append(words)\nfrom sklearn.feature_extraction.text import CountVectorizer\ncv = CountVectorizer(max_features=2500)\nX = cv.fit_transform(df['text']).toarray()\nfrom sklearn.preprocessing import LabelEncoder\nle = LabelEncoder()\ny = le.fit_transform(df['sentiment'])\nfrom sklearn.model_selection import train_test_split\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)\nfrom sklearn.naive_bayes import MultinomialNB\nnb = MultinomialNB().fit(X_train, y_train)\ny_pred = nb.predict(X_test)\nprint('Confusion Matrix: \\n', confusion_matrix(y_pred, y_test))\nprint('Accuracy:', accuracy_score(y_pred, y_test))",
+  "line_no": 18,
+  "line_no_percent": "64%"
+}

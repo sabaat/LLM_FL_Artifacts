@@ -1,0 +1,6 @@
+{
+  "instruction": "Create a program to solve the traveling salesman problem in python.",
+  "buggy_code": "import random\ngraph = {'A': ['B', 'C', 'D'], 'B': ['A', 'C', 'E'], 'C': ['A', 'B', 'D', 'E'], 'D': ['A', 'C'], 'E': ['B', 'C']}\n\ndef findBestRoute(graph):\n    currentNode = random.choice(list(graph.keys()))\n    bestRoute = [currentNode]\n    min_length = len(graph)\n    while len(bestRoute) <= min_length:\n        nbrs = graph[currentNode]\n        nextNode = None\n        minDist = float('Inf')\n        for node in nbrs:\n            if node not in bestRoute:\n                dist = 0\n                for i in range(len(bestRoute) - 1):\n                    dist += graph[bestRoute[i]][node]\n                if dist < minDist:\n                    minDist = dist\n                    nextNode = node\n        bestRoute.append(nextNode)\n        currentNode = nextNode\n    return bestRoute\nprint(findBestRoute(graph))",
+  "line_no": 17,
+  "line_no_percent": "74%"
+}

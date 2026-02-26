@@ -1,0 +1,6 @@
+{
+  "instruction": "Develop a program in Python to delete a node in a linked list.",
+  "buggy_code": "class Node:\n\n    def __init__(self, data):\n        self.data = data\n        self.next = None\n\nclass LinkedList:\n\n    def __init__(self):\n        self.head = None\n\n    def printList(self):\n        temp = self.head\n        while temp:\n            print(temp.data)\n            temp = temp.next\n\n    def delete_node(self, index):\n        temp = self.head\n        prev = None\n        if temp is None and index < 0:\n            return\n        if index == 0:\n            self.head = temp.next\n            temp = None\n            return\n        for i in range(index):\n            prev = temp\n            temp = temp.next\n        prev.next = temp.next\n        temp = None\nllist = LinkedList()\nllist.head = Node(1)\nsecond = Node(2)\nthird = Node(3)\nfourth = Node(4)\nllist.head.next = second\nsecond.next = third\nthird.next = fourth\nllist.delete_node(2)",
+  "line_no": 24,
+  "line_no_percent": "60%"
+}

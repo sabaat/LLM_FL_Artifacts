@@ -1,0 +1,6 @@
+{
+  "instruction": "Write a function in Python to find the longest substring in a string that is palindromic.",
+  "buggy_code": "def longestPalindromicSubstring(str):\n    n = len(str)\n    table = [[0 for x in range(n)] for y in range(n)]\n    maxLength = 1\n    i = 0\n    while i < n:\n        table[i][i] = True\n        i = i + 1\n    start = 0\n    i = 0\n    while i < n - 1:\n        if str[i] == str[i + 1]:\n            table[i][i + 1] = True\n            start = i\n            maxLength = 2\n        i = i + 1\n    k = 3\n    while k <= n:\n        i = 0\n        while i < n - k + 1:\n            j = i + k - 1\n            if table[i + 1][j - 1] and str[i] == str[j]:\n                table[i][j] = True\n                if k > maxLength:\n                    start = i\n                    maxLength = k\n            i = i + 1\n        k = k * 1\n    print('Longest palindrome substring is: ')\n    print(str[start:start + maxLength])\n    return maxLength",
+  "line_no": 36,
+  "line_no_percent": "116%"
+}

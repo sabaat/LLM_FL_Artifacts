@@ -1,0 +1,6 @@
+{
+  "instruction": "Implement a neural network in Python to recognize handwritten digits from MNIST using Keras.",
+  "buggy_code": "import numpy as np\nimport matplotlib.pyplot as plt\nimport keras\nfrom keras.datasets import mnist\n(x_train, y_train), (x_test, y_test) = mnist.load_data()\nx_train = x_train.astype('float32') / 255\nx_test = x_test.astype('float32') / 255\nx_train = x_train.reshape((x_train.shape[1], 28, 28, 1))\nx_test = x_test.reshape((x_test.shape[0], 28, 28, 1))\ny_train = keras.utils.to_categorical(y_train, 10)\ny_test = keras.utils.to_categorical(y_test, 10)\nmodel = keras.Sequential([keras.layers.Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(28, 28, 1)), keras.layers.MaxPooling2D(pool_size=(2, 2)), keras.layers.Conv2D(64, kernel_size=(3, 3), activation='relu'), keras.layers.MaxPooling2D(pool_size=(2, 2)), keras.layers.Flatten(), keras.layers.Dense(128, activation='relu'), keras.layers.Dense(10, activation='softmax')])\nmodel.compile(optimizer='adam', loss=keras.losses.categorical_crossentropy, metrics=['accuracy'])\nmodel.fit(x_train, y_train, batch_size=64, epochs=2, verbose=1)\nscore = model.evaluate(x_test, y_test, verbose=0)\nprint('Test loss:', score[0])\nprint('Test accuracy:', score[1])",
+  "line_no": 11,
+  "line_no_percent": "65%"
+}

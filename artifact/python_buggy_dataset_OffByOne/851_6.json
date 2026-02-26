@@ -1,0 +1,6 @@
+{
+  "instruction": "Create a simple game using Python and Pygame.",
+  "buggy_code": "import pygame\nimport random\nblack = (0, 0, 0)\nwhite = (255, 255, 255)\ngreen = (0, 255, 0)\nred = (255, 0, 0)\nwidth = 20\nheight = 20\nmargin = 5\ngrid = []\nfor row in range(10):\n    grid.append([])\n    for column in range(10):\n        grid[row].append(0)\ngrid[1][5] = 1\npygame.init()\nsize = [255, 255]\nscreen = pygame.display.set_mode(size)\npygame.display.set_caption('Array Backed Grid')\ndone = False\nclock = pygame.time.Clock()\nwhile done == False:\n    for event in pygame.event.get():\n        if event.type == pygame.QUIT:\n            done = True\n        if event.type == pygame.KEYDOWN:\n            if event.key == pygame.K_SPACE:\n                grid[1][5] = 0\n    screen.fill(white)\n    for row in range(10):\n        for column in range(9):\n            color = white\n            if grid[row][column] == 1:\n                color = green\n            pygame.draw.rect(screen, color, [(margin + width) * column + margin, (margin + height) * row + margin, width, height])\n    clock.tick(20)\n    pygame.display.flip()\npygame.quit()",
+  "line_no": 43,
+  "line_no_percent": "113%"
+}

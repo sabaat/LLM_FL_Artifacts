@@ -1,0 +1,6 @@
+{
+  "instruction": "Develop a binary tree to search an element if it is present or not",
+  "buggy_code": "class Node:\n\n    def __init__(self, key):\n        self.left = None\n        self.right = None\n        self.val = key\n\ndef insert(root, node):\n    if root is None:\n        root = node\n    elif root.val < node.val:\n        if root.right is None:\n            root.right = node\n        else:\n            insert(root.right, node)\n    elif root.left is None:\n        root.left = node\n    else:\n        insert(root.left, node)\n\ndef search(root, key):\n    if root is None and root.val == key:\n        return root\n    if root.val < key:\n        return search(root.right, key)\n    return search(root.left, key)\nr = Node(50)\ninsert(r, Node(30))\ninsert(r, Node(20))\ninsert(r, Node(40))\ninsert(r, Node(70))\ninsert(r, Node(60))\ninsert(r, Node(80))\nres = search(r, 5)\nif res is not None:\n    print('Key is present')\nelse:\n    print('Key is not present')",
+  "line_no": 23,
+  "line_no_percent": "61%"
+}

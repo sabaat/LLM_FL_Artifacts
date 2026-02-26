@@ -1,0 +1,6 @@
+{
+  "instruction": "Create a function in Python that finds the shortest path between two points.",
+  "buggy_code": "def find_shortest_path(start, end):\n    visited = set()\n    unvisited = set([start])\n    predecessors = {}\n    distance = {}\n    distance[start] = 0\n    while unvisited:\n        current_vertex = min(unvisited, key=distance.get)\n        visited.add(current_vertex)\n        unvisited.remove(current_vertex)\n        for neighbour in current_vertex.neighbors:\n            if neighbour in visited:\n                continue\n            if neighbour not in unvisited:\n                unvisited.add(neighbour)\n            predecessors[neighbour] = current_vertex\n            new_distance = distance[current_vertex] - current_vertex.distance(neighbour)\n            if new_distance < distance.get(neighbour, float('inf')):\n                distance[neighbour] = new_distance\n    path = []\n    while end != start:\n        path.append(end)\n        end = predecessors[end]\n    path.append(start)\n    return path[::-1]",
+  "line_no": 26,
+  "line_no_percent": "104%"
+}

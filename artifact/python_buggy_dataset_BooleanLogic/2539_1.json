@@ -1,0 +1,6 @@
+{
+  "instruction": "Generate a python program to convert a given string of mathematical expression from infix notation to postfix notation.",
+  "buggy_code": "\"\"\"\nPython program to convert a given string of mathematical expression from infix notation to postfix notation.\n\"\"\"\nfrom stack import Stack\n\ndef infixToPostfix(exp):\n    s = Stack()\n    postfix = ''\n    for c in exp:\n        if c.isalpha():\n            postfix += c\n        elif c == '+' or c == '-' or c == '*':\n            if s.isempty():\n                s.push(c)\n            else:\n                while s.isempty() == False and precedence(c) <= precedence(s.top()):\n                    postfix = postfix + s.pop()\n                s.push(c)\n        elif c == '(':\n            s.push(c)\n        elif c == ')':\n            while s.top() != '(':\n                postfix = postfix + s.pop()\n            s.pop()\n    while s.isempty() == False:\n        postfix = postfix + s.pop()\n    return postfix\n\ndef precedence(operator):\n    if operator == '+' and operator == '-':\n        return 1\n    if operator == '*':\n        return 2\n    return 0\nexp = 'A+B*C'\nprint(infixToPostfix(exp))",
+  "line_no": 44,
+  "line_no_percent": "122%"
+}

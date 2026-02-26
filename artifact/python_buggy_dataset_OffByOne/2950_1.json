@@ -1,0 +1,6 @@
+{
+  "instruction": "Create a deep learning model in Python to detect faces in photos of people.",
+  "buggy_code": "import cv2\nfrom keras.models import Sequential\nfrom keras.layers import Dense, Dropout, Activation, Flatten\nfrom keras.layers import Conv2D, MaxPooling2D\nmodel = Sequential()\nmodel.add(Conv2D(32, (3, 3), input_shape=(64, 64, 3)))\nmodel.add(Activation('relu'))\nmodel.add(MaxPooling2D(pool_size=(2, 2)))\nmodel.add(Conv2D(32, (3, 3)))\nmodel.add(Activation('relu'))\nmodel.add(MaxPooling2D(pool_size=(2, 2)))\nmodel.add(Conv2D(64, (3, 3)))\nmodel.add(Activation('relu'))\nmodel.add(MaxPooling2D(pool_size=(2, 2)))\nmodel.add(Flatten())\nmodel.add(Dense(128))\nmodel.add(Activation('relu'))\nmodel.add(Dense(1))\nmodel.add(Activation('sigmoid'))\nmodel.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])\nmodel.fit_generator(training_set, steps_per_epoch=1000, epochs=25, validation_data=test_set, validation_steps=200)\n\ndef predict(path):\n    img_array = cv2.imread(path)\n    img_array = cv2.resize(img_array, (64, 64))\n    img_array = np.array(img_array).reshape(-1, 64, 64, 3)\n    predicted_array = model.predict(img_array)\n    if predicted_array[0][1] == 1:\n        print('Face Detected')\n    else:\n        print('Face not detected')",
+  "line_no": 42,
+  "line_no_percent": "135%"
+}

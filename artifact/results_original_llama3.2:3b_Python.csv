@@ -1,0 +1,8 @@
+Total Programs,Success,Failure,Accuracy %,Tested LLM,Bug Type,Language,0-25 Success,25-50 Success,50-75 Success,75-100 Success,0-25 Failures,25-50 Failures,50-75 Failures,75-100 Failures
+148,5,144,3.38,llama3.2:3b,BooleanLogic,Python,1,2,2,0,11,29,42,62
+61,5,57,8.2,llama3.2:3b,MisplacedReturn,Python,2,3,0,0,17,15,16,9
+212,5,208,2.36,llama3.2:3b,OffByOne,Python,3,2,0,0,24,46,50,88
+111,5,108,4.5,llama3.2:3b,BooleanLogic,Python,2,2,0,1,8,24,32,43
+45,5,41,11.11,llama3.2:3b,MisplacedReturn,Python,2,3,0,0,15,9,11,6
+69,5,65,7.25,llama3.2:3b,OffByOne,Python,3,2,0,0,9,13,17,26
+137,5,133,3.65,llama3.2:3b,OperatorSwap,Python,1,1,3,0,12,29,39,53

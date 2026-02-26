@@ -1,0 +1,6 @@
+{
+  "instruction": "Create a GUI program in Python that takes three inputs and displays an output.",
+  "buggy_code": "import tkinter\nwindow = tkinter.Tk()\nwindow.configure(background='light green')\nwindow.title('Calculator')\nwindow.geometry('270x150')\nlabel_num1 = tkinter.Label(window, text='Input #1', bg='light green')\nlabel_num1.grid(row=1, column=0)\nlabel_num2 = tkinter.Label(window, text='Input #2', bg='light green')\nlabel_num2.grid(row=2, column=0)\nlabel_num3 = tkinter.Label(window, text='Input #3', bg='light green')\nlabel_num3.grid(row=3, column=0)\nnum1 = tkinter.Entry(window)\nnum1.grid(row=1, column=1)\nnum2 = tkinter.Entry(window)\nnum2.grid(row=2, column=1)\nnum3 = tkinter.Entry(window)\nnum3.grid(row=3, column=1)\nbtn_result = tkinter.Button(window, text='Submit', fg='Black', bg='light blue', command=MyFun)\nbtn_result.grid(row=4, column=1)\nbtn_exit = tkinter.Button(window, text='Exit', fg='Black', bg='light blue', command=exit)\nbtn_exit.grid(row=4, column=2)\n\ndef MyFun():\n    a = int(num1.get())\n    b = int(num2.get())\n    c = int(num3.get())\n    result = a + b - c\n    label_result = tkinter.Label(window, text='Sum: ' + str(result), fg='Black', bg='light green')\n    label_result.grid(row=5, column=1)\nwindow.mainloop()",
+  "line_no": 41,
+  "line_no_percent": "137%"
+}
