@@ -1,123 +1,110 @@
-# Artifact Evaluation Guide
+# Assessing the Impact of Code Changes on the Fault Localizability of Large Language Models
 
-This artifact reproduces the paper's fault-localization evaluation
-under:
-
--   **SAMs** (Semantic-Altering Mutations)
--   **SPMs** (Semantic-Preserving Mutations)
-
-It directly supports **RQ1--RQ3**.\
-RQ4--RQ5 require running the full pipeline used in paper (see end).
+**Paper:** [arXiv Preprint](https://arxiv.org/abs/2504.04372)  
+**Artifact Archive:** Zenodo Record 
+**Authors:** Sabaat Haroon, Ahmad Faraz Khan, Ahmad Humayun, Waris Gill, Abdul Haddi Amjad, Ali R. Butt, Mohammad Taha Khan, Muhammad Ali Gulzar
 
 ------------------------------------------------------------------------
 
-# Research Questions Supported
+# 1. Purpose
+This work provides the experimental framework used to conduct the first large-scale empirical investigation into the robustness of Large Language Models' (LLMs) fault localization (FL) capabilities. While LLMs are increasingly used for software maintenance, our research reveals that their performance is often tied to surface-level syntactic cues rather than true program semantics.
 
-  ----------------------------------------------------------------------------------------
-  RQ           What You Run                 What To Look At
-  ------------ ---------------------------- ----------------------------------------------
-  **RQ1** --   Quick evaluation             `artifact_results.png` + strength 1 section in
-  Robustness                                `results_summary.txt`
-  to SPMs                                   
+This artifact provides:
 
-  **RQ2** --   Quick evaluation (if         `artifact_results_strength_comparison.png` +
-  Effect of    strength-4 data exists)      `artifact_results_mutation_types.png`
-  mutation                                  
-  type &                                    
-  strength                                  
+Robustness Testing: A framework to apply Semantic-Preserving Mutations (SPMs), such as misleading comments, misleading variable names, or dead code, to evaluate if the model's fault localization accuracy remains unaffected.
 
-  **RQ3** --   Quick evaluation             `artifact_results_windowed.png`
-  Effect of                                 
-  fault                                     
-  location                                  
-  ----------------------------------------------------------------------------------------
+Reproducibility: Pre-configured scripts to replicate the findings of RQ1, RQ2, and RQ3 as presented in the paper.
+
+Extensibility: Instructions to add custom datasets and test new models via Ollama or proprietary APIs.
+
 
 ------------------------------------------------------------------------
 
-# Quick Evaluation (15--20 Minutes)
+# 2. Provenance
 
-Runs evaluation on pre-generated data.
+Paper: ICST 2026 (Accepted) 
 
-------------------------------------------------------------------------
+Archived Artifact: Zenodo DOI: 
 
-## Requirements
+GitHub Repository: [GitHub](https://github.com/SEED-VT/LLMCodeImpact)
 
--   **Docker**
-    -   Check: `docker --version`
-    -   **Linux (Ubuntu/Debian):** `curl -fsSL https://get.docker.com | sh` then `sudo usermod -aG docker $USER` (log out and back in). Or install [Docker Engine](https://docs.docker.com/engine/install/).
-    -   **macOS / Windows:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) — download and install from docker.com.
-
--   **Ollama installed on host**
-    -   **Linux:** `curl -fsSL https://ollama.com/install.sh | sh` (or see [ollama.com](https://ollama.com/download)).
-    -   **macOS:** Download from [ollama.com/download](https://ollama.com/download) or `brew install ollama`.
-    -   **Windows:** Download installer from [ollama.com/download](https://ollama.com/download).
-    -   Then start Ollama (Step 2) and pull a model: `ollama pull llama3.2:3b`.
+License: MIT
 
 ------------------------------------------------------------------------
 
-# Step 1 --- Build Docker Image
+# 3. System Requirements
 
-From repository root:
+## Minimum (Artifact Evaluation Mode)
 
+-   Docker
+-   Ollama installed on host
+-   12GB RAM recommended
+-   No GPU required for quick mode
+
+## Full Paper Reproduction
+
+-   GPU required
+-   Java installed (for Java pipeline)
+-   Larger runtime expected
+
+------------------------------------------------------------------------
+
+# 4. Setup
+
+## 4.1 Install Docker
+
+Check installation:
 ``` bash
-docker build -t artifact-eval ./artifact
+    docker --version
 ```
+If not installed:
 
-Expected output:
-
-    Successfully built ...
-    Successfully tagged artifact-eval:latest
-
-![Successful Docker Build](images/docker_success.png)
+-   Linux: https://docs.docker.com/engine/install/
+-   macOS/Windows: https://www.docker.com/products/docker-desktop/
 
 ------------------------------------------------------------------------
 
-# Step 2 --- Start Ollama (Host Machine)
+## 4.2 Install Ollama
 
+-   Download from https://ollama.com/download
+
+Pull model:
 ``` bash
-ollama serve
+    ollama pull llama3.2:3b
 ```
-
-In another terminal:
-
-``` bash
-ollama pull llama3.2:3b
-```
-
-Expected:
-
-    Listening on 127.0.0.1:11434
-
 ![Successful ollama pull](images/pull_success.png)
 
 ------------------------------------------------------------------------
 
-# Step 3 --- Run Quick Evaluation (Eval-Only Mode)
+# 5. Quick Evaluation (15--20 Minutes)
 
-## Linux
+Runs evaluation on pre-generated data.
+
+## Step 1 --- Build Docker Image
+
+From repository root:
+``` bash
+    docker build -t artifact-eval ./artifact
+```
+![Successful Docker Build](images/docker_success.png)
+
+------------------------------------------------------------------------
+
+## Step 2 --- Run Quick Evaluation
+
+### Linux
 
 ``` bash
-cd artifact
-docker run --rm -it --network host \
-  -v "$(pwd)":/artifact \
-  -w /artifact \
-  artifact-eval \
-  ./run_artifact.sh --eval-only llama3.2:3b
+    cd artifact
+    chmod +x run_artifact.sh
+    docker run --rm -it --network host   -v "$(pwd)":/artifact   -w /artifact   artifact-eval   ./run_artifact.sh --eval-only llama3.2:3b
 ```
-
-## Mac / Windows
-
+### macOS / Windows
 ``` bash
-cd artifact
-chmod +x run_artifact.sh 
-docker run --rm -it \
-  -e OLLAMA_HOST=http://host.docker.internal:11434 \
-  -v "$(pwd)":/artifact \
-  -w /artifact \
-  artifact-eval \
-  ./run_artifact.sh --eval-only llama3.2:3b
+    cd artifact
+    chmod +x run_artifact.sh
+    docker run --rm -it   -e OLLAMA_HOST=http://host.docker.internal:11434   -v "$(pwd)":/artifact   -w /artifact   artifact-eval   ./run_artifact.sh --eval-only llama3.2:3b
 ```
-
 Expected terminal output at the start of run:
 
 ![Successful Run Start](images/run_start.png)
@@ -128,24 +115,25 @@ Expected terminal output at the start of run:
 
 ------------------------------------------------------------------------
 
-# Expected Output Files
+# 7. Expected Output Files
 
-After completion, the `artifact/` directory contains:
+After completion, the `artifact/` directory will contain:
 
 -   `results_summary.txt`
 -   `artifact_results.png`
--   `artifact_results_strength_comparison.png` 
+-   `artifact_results_strength_comparison.png`
 -   `artifact_results_mutation_types.png`
 -   `artifact_results_windowed.png`
 
 ![Successful File Generation](images/success_files.png)
 
+
 ------------------------------------------------------------------------
 
-# Interpreting Results
+# 8. Interpreting Results
 
-## RQ1 -- Robustness to SPMs
-
+## RQ1 --- Robustness to SPMs
+For each bug type (SAM), how many of the N programs were still correctly localized after each of the five SPMs (mutation strength 1)
 Open:
 
     artifact_results.png
@@ -153,9 +141,9 @@ Open:
 Example:
 ![Artifact Results](artifact/artifact_results.png)
 
-------------------------------------------------------------------------
-
-## RQ2 -- Effect of Mutation Type & Strength
+## RQ2 --- Effect of Mutation Type & Strength
+- For each bug type (SAM), localization success at mutation strength 1 vs 4 for each of the five SPMs.
+- Total number of programs still correctly localized by SPM type, summed over all bug types, at strength 1 vs 4
 
 Open:
 
@@ -166,11 +154,8 @@ Example:
 ![Mutation Strength Analysis](artifact/artifact_results_strength_comparison.png)
 ![Mutation Type Analysis](artifact/artifact_results_mutation_types.png)
 
-
-------------------------------------------------------------------------
-
-## RQ3 -- Effect of Fault Location
-
+## RQ3 --- Effect of Fault Location
+Cumulative count of correct (matches) vs incorrect (mismatches) localizations by bug position in the file.
 Open:
 
     artifact_results_windowed.png
@@ -180,62 +165,46 @@ Example:
 
 ------------------------------------------------------------------------
 
-# Optional --- Full Pipeline
+# 9. Full Pipeline (Will require longer runtime based on N - 30 min+)
 
-Regenerates SPMs and recomputes first N programs.
-
+Regenerates SPMs and recomputes first N programs:
 ``` bash
-./run_artifact.sh llama3.2:3b 5
+    ./run_artifact.sh llama3.2:3b 5
 ```
-
-Default `N = 5`.
+Default N = 5.
 
 ------------------------------------------------------------------------
 
-# Java Pipeline
+# 10. Java Pipeline
 
-Requires Java installed on host.
-
+Requires Java installed on host:
 ``` bash
-cd artifact_java
-chmod +x run_artifact.sh run-experiments.sh
-./run_artifact.sh llama3.2:3b
+    cd artifact_java
+    chmod +x run_artifact.sh run-experiments.sh
+    ./run_artifact.sh llama3.2:3b
 ```
-
 ------------------------------------------------------------------------
 
-# Full Paper Reproduction (RQ4, RQ5)
-
-Run:
-
+# 11. Full Paper Reproduction (RQ4, RQ5)
 ``` bash
-./run_paper_python.sh llama3.2:3b
+    ./run_paper_python.sh llama3.2:3b
 ```
-
-(Long runtime. Will require a GPU)
-
-------------------------------------------------------------------------
-
-# Adding Your Own Python or Java Projects
-
-You can run the pipeline on your own buggy programs. Prepare the data in the format below, place it where the pipeline expects it, then run the **full pipeline** (not eval-only).
+Long runtime. GPU required.
 
 ------------------------------------------------------------------------
 
-## Required data format
+# 12. Adding Your Own Python or Java Projects
 
-Each **buggy program** is one JSON file. The pipeline reads all `.json` files in each dataset folder.
+Each buggy program must be one JSON file containing:
 
-**Required fields in every JSON file:**
+  Field             Type     Description
+  ----------------- -------- ---------------------------
+  instruction       string   Intended behavior
+  buggy_code        string   Full source code with bug
+  line_no           number   1-based bug line
+  line_no_percent   string   Percentage location
 
-| Field              | Type   | Description |
-|--------------------|--------|-------------|
-| `instruction`      | string | What the code is supposed to do (the intended behavior). Shown to the LLM as the task. |
-| `buggy_code`       | string | The full source code of the program **containing the bug** (Python or Java). |
-| `line_no`          | number | The **exact line number** (1-based) where the bug is located in `buggy_code`. |
-| `line_no_percent`  | string | Position of the bug as a percentage of file length, for windowed analysis. Use a number with optional `%`, e.g. `"25"`, `"50%"`, `"75.5"`. Values &lt; 25 → window 0–25%, &lt; 50 → 25–50%, &lt; 75 → 50–75%, else 75–100%. |
-
-**Example (minimal):**
+Example:
 
 ``` json
 {
@@ -246,73 +215,49 @@ Each **buggy program** is one JSON file. The pipeline reads all `.json` files in
 }
 ```
 
-Filenames can be anything ending in `.json` (e.g. `project1_bug1.json`, `123_4.json`).
+Place dataset folders inside:
+
+-   `artifact/` for Python
+-   `artifact_java/` for Java
+
+Or mount a custom directory during Docker execution.
 
 ------------------------------------------------------------------------
 
-## Where to add the data
+# 13. How This Artifact Meets ICST Criteria
 
-The pipeline looks for **one folder per bug type (SAM)**. Each folder must contain only JSON files in the format above.
+### Artifact Available
 
-**Python:**
+-   Fully packaged with Docker
+-   All scripts included
 
-- **Option A — Inside the artifact:**  
-  Add these folders (with your JSONs inside) under the `artifact/` directory. Then the default run uses them.
-- **Option B — Custom directory:**  
-  Put the folders in a separate directory (e.g. `my_python_bugs/`). You will pass this path as the **experiment_dir** when running (see below).
+### Artifact Reviewed
 
-**Java:**
+The artifact is:
 
+Documented: Includes installation steps, execution commands (quick and full modes), expected outputs, and dataset format specification.
 
-- **Option A — Inside the artifact:**  
-  Add these folders under `artifact_java/`.
-- **Option B — Custom directory:**  
-  Put the folders elsewhere and pass that path as the experiment directory to the Java `run_artifact.sh` (third argument).
+Consistent: Directly implements the evaluation framework and reproduces the paper’s reported results.
+
+Complete: Contains all scripts, data (or generation pipeline), and plotting tools required for reproduction.
+
+Exercisable: Runs in a 15–20 minute quick mode and supports full pipeline execution to regenerate results.
 
 ------------------------------------------------------------------------
 
-## How to run with your data
+# 14. Contact
 
-**Python (Docker, full pipeline):**
+- For questions related to the paper or advanced usage, contact the author directly via (sabaat@vt.edu)[sabaat@vt.edu]. 
 
-If your data is **inside** `artifact/` (Option A), from the `artifact` directory:
+------------------------------------------------------------------------
 
-``` bash
-# Linux
-docker run --rm -it --network host -v "$(pwd)":/artifact -w /artifact artifact-eval ./run_artifact.sh llama3.2:3b 5
-
-# Mac/Windows
-docker run --rm -it -e OLLAMA_HOST=http://host.docker.internal:11434 -v "$(pwd)":/artifact -w /artifact artifact-eval ./run_artifact.sh llama3.2:3b 5
+# Citation
+If you use our work in your research, please cite the paper:
+```bibtex
+@inproceedings{haroon2026assessing,
+  title={Assessing the Impact of Code Changes on the Fault Localizability of Large Language Models},
+  author={Haroon, Sabaat and Khan, Ahmad Faraz and Humayun, Ahmad and Gill, Waris and Amjad, Abdul Haddi and Butt, Ali R and Khan, Mohammad Taha and Gulzar, Muhammad Ali},
+  booktitle={2026 IEEE Conference on Software Testing, Verification and Validation (ICST)},
+  year={2026}
+}
 ```
-
-If your data is in a **custom directory** (Option B), mount that directory and pass it as the third argument. Example: data in `/path/to/my_python_bugs` (containing `python_buggy_dataset_OffByOne/`, etc.):
-
-``` bash
-# Linux
-docker run --rm -it --network host \
-  -v "$(pwd)":/artifact \
-  -v /path/to/my_python_bugs:/data \
-  -w /artifact \
-  artifact-eval \
-  ./run_artifact.sh llama3.2:3b 5 /data
-
-# Mac/Windows: add -e OLLAMA_HOST=http://host.docker.internal:11434, omit --network host
-```
-
-**Java (on host, full pipeline):**
-
-From `artifact_java/`, with your dataset folders inside `artifact_java/` (Option A):
-
-``` bash
-cd artifact_java
-./run_artifact.sh llama3.2:3b 5
-```
-
-With a **custom directory** (Option B), e.g. `/path/to/my_java_bugs`:
-
-``` bash
-cd artifact_java
-./run_artifact.sh llama3.2:3b 5 /path/to/my_java_bugs
-```
-
-The pipeline will: (1) run the LLM on each JSON to find the bug line, (2) keep the first N where the LLM was correct, (3) generate SPM variants, (4) re-run the LLM, (5) write `results_summary.txt` and the graphs into the artifact directory (Python) or `artifact_java/` (Java).
